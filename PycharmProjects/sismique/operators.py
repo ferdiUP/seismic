@@ -52,26 +52,29 @@ def grad(u):
 
 
 # Tests
-img = cv2.imread('data/IMG_0410.PNG', 0)[38:731, 8:681]
-#img = imread('data/IMG_0410.PNG')[38:731, 8:681]
-u = np.random.normal(0, 1, (40, 40)) + np.random.gamma(2, 1, (40, 40))
-v = np.random.normal(0, 1, (643, 673))
-print(type(img))
-print(img.shape)
-print(type(u))
-print(u.shape)
+img = cv2.imread('data/IMG_0410.PNG', 0)[38:731, 8:681] # Load your image here
+img_rot = imutils.rotate(img, angle=45)
 
 plt.figure()
-plt.subplot(221)
+plt.subplot(131)
 plt.imshow(img)
 plt.title('Original image (1-color scaled)')
-plt.subplot(222)
-plt.imshow(div(img, v))
-plt.title('Divergence (div(image, gaussian_noise) here)')
-plt.subplot(223)
+plt.subplot(132)
+plt.imshow(img_rot)
+plt.title('45° rotated image')
+plt.subplot(133)
+plt.imshow(div(img, img_rot))
+plt.title('Divergence')
+plt.tight_layout()
+
+plt.figure()
+plt.subplot(131)
+plt.imshow(img)
+plt.title('Original image (1-color scaled)')
+plt.subplot(132)
 plt.imshow(grad(img)[1])
 plt.title('Horizontal gradient')
-plt.subplot(224)
+plt.subplot(133)
 plt.imshow(grad(img)[0])
 plt.title('Vertical gradient')
 plt.tight_layout()
